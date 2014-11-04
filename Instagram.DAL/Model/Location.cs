@@ -8,6 +8,11 @@ namespace Instagram.DAL.Model
 {
     public class Location
     {
+        public Location(double id)
+        {
+            this.Id = id;
+        }
+
         public Location(double latitude, double longitude)
         {
             this.Latitude = latitude;
@@ -26,15 +31,6 @@ namespace Instagram.DAL.Model
         public double Id { get; private set; }
         public double Latitude { get; private set; }
         public double Longitude { get; private set; }
-        public bool IsAvaliable
-        {
-            get
-            {
-                if (this.Latitude != 0 && this.Longitude != 0) return true;
-                
-                return false;
-            }
-        }
 
         public override string ToString()
         {

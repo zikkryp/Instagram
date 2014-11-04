@@ -69,21 +69,34 @@ namespace Instagram.DAL.DataSource
         {
             if (locationValue.ValueType == JsonValueType.Null)
             {
-                return new Location(0, 0);
+                return null;
             }
 
             var locationObject = locationValue.GetObject();
 
-            double latitude = locationObject["latitude"].GetNumber();
-            double longitude = locationObject["longitude"].GetNumber();
+            double latitude = 0;
+            double longitude = 0;
 
-            //if (locationObject.ContainsKey("name") && locationObject.ContainsKey("id"))
-            //{
-            //    var name = locationObject["name"].GetString();
-            //    var id = locationObject["id"].GetNumber();
+            if (locationObject.ContainsKey("latitude") && locationObject.ContainsKey("longitude"))
+            {
+                latitude = locationObject["latitude"].GetNumber();
+                longitude = locationObject["longitude"].GetNumber();
+            }
 
-            //    return new Location(latitude, longitude, name, id);
-            //}
+            if (locationObject.ContainsKey("name") && locationObject.ContainsKey("id"))
+            {
+                var name = locationObject["name"].GetString();
+                var id = locationObject["id"].GetNumber();
+
+                return new Location(latitude, longitude, name, id);
+            }
+
+            if (locationObject.ContainsKey("id"))
+            {
+                var id = locationObject["id"].GetNumber();
+
+                return new Location(id);
+            }
 
             return new Location(latitude, longitude);
         }

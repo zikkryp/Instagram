@@ -91,7 +91,9 @@ namespace Instagram.UI
 
         private async void LoadPage()
         {
-            ring.IsActive = true;
+            //ring.IsActive = true;
+
+            progressBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
             try
             {
@@ -116,7 +118,9 @@ namespace Instagram.UI
             }
             finally
             {
-                ring.IsActive = false;
+                //ring.IsActive = false;
+
+                progressBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
         }
 
@@ -147,6 +151,50 @@ namespace Instagram.UI
         private void More_Click(object sender, RoutedEventArgs e)
         {
             LoadPage();
+        }
+
+        private async void UserInfo_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            PopupMenu menu = new PopupMenu();
+
+            menu.Commands.Add(new UICommand("View", new UICommandInvokedHandler(this.OpenUsersPage)));
+            menu.Commands.Add(new UICommand("Settings", new UICommandInvokedHandler(this.OpenSettings)));
+            menu.Commands.Add(new UICommand("Sign out", new UICommandInvokedHandler(this.SignOut)));
+
+            var pointTransform = ((GridViewItem)sender).TransformToVisual(Window.Current.Content);
+            var screenCoords = pointTransform.TransformPoint(new Point(200, 125));
+
+            await menu.ShowAsync(screenCoords);
+        }
+
+        private async void OpenUsersPage(IUICommand command)
+        {
+            await new MessageDialog(command.Label).ShowAsync();
+        }
+
+        private async void OpenSettings(IUICommand command)
+        {
+            await new MessageDialog(command.Label).ShowAsync();
+        }
+
+        private async void SignOut(IUICommand command)
+        {
+            try
+            {
+                Storage storage = new Storage();
+
+                var account = await storage.GetActiveAccountAsync();
+
+                account.IsAutoSignIn = false;
+
+                await storage.UpdateItem<Account>(account);
+
+                this.Frame.Navigate(typeof(WelcomePage));
+            }
+            catch (Exception e)
+            {
+                ShowDialog(e.Message);
+            }
         }
     }
 }

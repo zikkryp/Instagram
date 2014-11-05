@@ -33,9 +33,9 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock x:Name="pageTitle" Text="Instagram" Grid.Column="1" Grid.ColumnSpan="2" IsHitTestVisible="false" FontFamily="Billabong" FontSize="100" TextWrapping="NoWrap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="pageTitle" Text="Instagram" Foreground="#1c5380" IsHitTestVisible="false" FontFamily="Billabong" FontSize="100" TextWrapping="NoWrap" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2"/>
 
-            <GridViewItem Style="{StaticResource GridViewItemStyleNone}" Width="300" Height="100" HorizontalAlignment="Right" Grid.Column="3">
+            <GridViewItem Style="{StaticResource GridViewItemStyleNone}" Width="300" Height="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="3" Tapped="UserInfo_Tapped">
                 <Grid Width="300" Height="100">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
@@ -49,19 +49,12 @@
                     <TextBlock Text="{Binding User.Username}" FontSize="27" FontWeight="Light" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1"/>
                 </Grid>
             </GridViewItem>
-            <ProgressRing Width="50" Height="50" Foreground="Black" x:Name="ring"/>
+            <!--<ProgressRing Width="50" Height="50" Foreground="Black" x:Name="ring"/>-->
         </Grid>
         <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Button x:Name="moreButton"
-                    Template="{StaticResource MoreTemplate}"
-                    Height="50"
-                    Width="50"
-                    Visibility="Collapsed"
-                    VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10"
-                    Click="More_Click" Background="#B31B1B1B"/>
+            <Button x:Name="moreButton" Template="{StaticResource MoreTemplate}" Height="50" Width="50" Visibility="Collapsed" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20" Click="More_Click" Background="#B31B1B1B"/>
+            <Button Foreground="White" Background="#1c5380" Height="25" Margin="-5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" BorderBrush="#FF1C5380" Style="{StaticResource ButtonBottom}"/>
+            <ProgressBar x:Name="progressBar" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,25" IsIndeterminate="True" Visibility="Collapsed"/>
             <GridView x:Name="gridView" ItemsSource="{Binding Feed}" IsItemClickEnabled="True" 
                       SelectionMode="Extended" 
                       ItemClick="GridView_ItemClick"
@@ -69,7 +62,6 @@
                       Grid.Row="1" 
                       ItemContainerStyle="{StaticResource GridViewItemStyleNone}"
                       ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-
                 <GridView.ItemTemplate>
                     <DataTemplate>
                         <Grid Width="420" Height="300">
@@ -93,7 +85,7 @@
                                 </Rectangle>
                                 <TextBlock Text="{Binding CreatedTime}" FontSize="15" FontWeight="SemiLight" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1"/>
                             </Grid>
-                            <TextBlock Text="{Binding User.Username}" FontSize="24" FontWeight="SemiLight" Margin="10,0,0,0" Grid.Column="1"/>
+                            <TextBlock Text="{Binding User.Username}" Foreground="#1c5380" FontSize="24" FontWeight="SemiLight" Margin="10,0,0,0" Grid.Column="1"/>
                             <Rectangle RadiusX="135" RadiusY="135" Width="265" Height="265" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1">
                                 <Rectangle.Fill>
                                     <ImageBrush ImageSource="{Binding Images.Thumbnail.Url}"/>

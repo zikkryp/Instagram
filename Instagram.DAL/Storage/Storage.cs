@@ -43,5 +43,38 @@ namespace Instagram.DAL.Storage
                 return null;
             }
         }
+
+        public async Task UpdateItem<T>(T item)
+        {
+            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("Instagram.db", CreationCollisionOption.OpenIfExists);
+
+            await Task.Delay(1);
+
+            using (SQLiteConnection connection = new SQLiteConnection(file.Path))
+            {
+                connection.InsertOrReplace(item);
+            }
+        }
+
+        public async Task<bool> DeleteItem<T>(int id)
+        {
+            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("Instagram.db", CreationCollisionOption.OpenIfExists);
+
+            await Task.Delay(1);
+
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(file.Path))
+                {
+                    connection.Delete<T>(id);
+                }
+
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
     }
 }

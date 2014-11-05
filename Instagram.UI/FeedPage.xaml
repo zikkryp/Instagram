@@ -62,7 +62,8 @@
                     Visibility="Collapsed"
                     VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10"
                     Click="More_Click" Background="#B31B1B1B"/>
-            <GridView x:Name="gridView" ItemsSource="{Binding Feed}" IsItemClickEnabled="True" SelectionMode="None" 
+            <GridView x:Name="gridView" ItemsSource="{Binding Feed}" IsItemClickEnabled="True" 
+                      SelectionMode="Extended" 
                       ItemClick="GridView_ItemClick"
                       VerticalAlignment="Center"
                       Grid.Row="1" 

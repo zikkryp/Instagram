@@ -76,7 +76,7 @@ namespace Instagram.UI
                 // Если стек навигации не восстанавливается для перехода к первой странице,
                 // настройка новой страницы путем передачи необходимой информации в качестве параметра
                 // навигации
-                rootFrame.Navigate(typeof(FeedPage), e.Arguments);
+                rootFrame.Navigate(typeof(WelcomePage), e.Arguments);
             }
             // Обеспечение активности текущего окна
             Window.Current.Activate();

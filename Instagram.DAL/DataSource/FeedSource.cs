@@ -35,6 +35,7 @@ namespace Instagram.DAL.DataSource
         private async Task GetDataAsync()
         {
             Account account = await new Storage.Storage().GetActiveAccountAsync();
+
             string feedUri = "https://api.instagram.com/v1/users/self/feed?access_token=" + account.Token;
             
             if (Feed.Pagination.HasMorePages)

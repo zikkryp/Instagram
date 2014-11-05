@@ -28,6 +28,7 @@ namespace Instagram.DAL.Storage
 
             using (SQLiteConnection connection = new SQLiteConnection(file.Path))
             {
+                //return connection.Query<Account>("select * from Account where IsActive = 1").FirstOrDefault();
                 return connection.Find<Account>(e => e.IsActive == true);
             }
         }

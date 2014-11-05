@@ -56,9 +56,9 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Button x:Name="moreButton"
-                    Style="{StaticResource TextBlockButtonStyle}"
-                    FontFamily="Billabong"
-                    Content="Load More..." FontSize="34"
+                    Template="{StaticResource MoreTemplate}"
+                    Height="50"
+                    Width="50"
                     Visibility="Collapsed"
                     VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10"
                     Click="More_Click" Background="#B31B1B1B"/>

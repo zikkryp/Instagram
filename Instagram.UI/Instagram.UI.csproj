@@ -137,9 +137,12 @@
     </Content>
     <Content Include="Images\Backgroud.jpg" />
     <Content Include="Images\MouseOver\Liked.png" />
+    <Content Include="Images\MouseOver\More.png" />
     <Content Include="Images\Normal\Liked.png" />
+    <Content Include="Images\Normal\More.png" />
     <Content Include="Images\Normal\NoLike.png" />
     <Content Include="Images\Pressed\Liked.png" />
+    <Content Include="Images\Pressed\More.png" />
     <None Include="Instagram.UI_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

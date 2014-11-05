@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
@@ -22,6 +23,7 @@ namespace Instagram.UI
         public WelcomePage()
         {
             this.InitializeComponent();
+
             GetActiveAccount();
         }
 
@@ -29,9 +31,17 @@ namespace Instagram.UI
         {
             try
             {
-                await System.Threading.Tasks.Task.Delay(1);
-
                 var account = await new Storage().GetActiveAccountAsync();
+
+                if (account == null)
+                {
+                    //if (await new Authentication().AuthenticateAsync() != null)
+                    //{
+                    //    this.Frame.Navigate(typeof(FeedPage));
+                    //}
+
+                    return;
+                }
                 
                 this.Frame.Navigate(typeof(FeedPage));
             }
@@ -43,20 +53,15 @@ namespace Instagram.UI
 
         private async void ShowDialog(string message)
         {
-            await new MessageDialog(message).ShowAsync();
+            await new MessageDialog(message, "WelcomePage").ShowAsync();
         }
 
-        private async void Authorize()
+        private async void SignIn_Click(object sender, RoutedEventArgs e)
         {
-            Authentication authentication = new Authentication();
-            await authentication.AuthenticateAsync();
-
-            this.Frame.Navigate(typeof(FeedPage));
-        }
-
-        private void SignIn_Click(object sender, RoutedEventArgs e)
-        {
-            Authorize();
+            if (await new Authentication().AuthenticateAsync() != null)
+            {
+                this.Frame.Navigate(typeof(FeedPage));
+            }
         }
     }
 }

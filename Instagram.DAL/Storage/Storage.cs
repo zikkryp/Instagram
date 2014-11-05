@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SQLite;
 using Windows.Storage;
 using Instagram.DAL.Storage.Model;
+using Windows.UI.Popups;
 
 namespace Instagram.DAL.Storage
 {
@@ -14,6 +15,8 @@ namespace Instagram.DAL.Storage
         public async Task CreateAsync<T>(T item)
         {
             StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("Instagram.db", CreationCollisionOption.OpenIfExists);
+            
+            await Task.Delay(1);
 
             using (SQLiteConnection connection = new SQLiteConnection(file.Path))
             {
@@ -26,10 +29,18 @@ namespace Instagram.DAL.Storage
         {
             StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("Instagram.db", CreationCollisionOption.OpenIfExists);
 
-            using (SQLiteConnection connection = new SQLiteConnection(file.Path))
+            await Task.Delay(1);
+
+            try
             {
-                //return connection.Query<Account>("select * from Account where IsActive = 1").FirstOrDefault();
-                return connection.Find<Account>(e => e.IsActive == true);
+                using (SQLiteConnection connection = new SQLiteConnection(file.Path))
+                {
+                    return connection.Find<Account>(e => e.IsActive == true);
+                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
     }

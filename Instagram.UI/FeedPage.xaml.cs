@@ -122,7 +122,7 @@ namespace Instagram.UI
 
         private async void ShowDialog(string message)
         {
-            await new MessageDialog(message).ShowAsync(); 
+            await new MessageDialog(message,"FeedPage").ShowAsync(); 
         }
 
         private void UpdateControls()

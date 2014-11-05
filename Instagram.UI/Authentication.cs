@@ -31,7 +31,7 @@ namespace Instagram.UI
                 return account;
             }
 
-            return new Account();
+            return null;
         }
     }
 }

@@ -62,8 +62,9 @@ namespace Instagram.UI
 
                 return;
             }
-                
-            LoadPage();
+
+            LoadFeed(true);
+            GetUser();
         }
 
         private void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -89,7 +90,14 @@ namespace Instagram.UI
         private Feed Feed;
         private User User;
 
-        private async void LoadPage()
+        private async void GetUser()
+        {
+            this.User = await UserSource.GetUserAsync();
+
+            this.defaultViewModel["User"] = User;
+        }
+
+        private async void LoadFeed(bool refresh)
         {
             //ring.IsActive = true;
 
@@ -97,10 +105,8 @@ namespace Instagram.UI
 
             try
             {
-                this.Feed = await FeedSource.GetFeedAsync(false);
-                this.User = await UserSource.GetUserAsync();
-
-                this.defaultViewModel["User"] = User;
+                this.Feed = await FeedSource.GetFeedAsync(refresh);
+                
                 this.defaultViewModel["Feed"] = Feed.Items;
 
                 if (!Feed.Pagination.HasMorePages)
@@ -150,7 +156,7 @@ namespace Instagram.UI
 
         private void More_Click(object sender, RoutedEventArgs e)
         {
-            LoadPage();
+            LoadFeed(false);
         }
 
         private async void UserInfo_Tapped(object sender, TappedRoutedEventArgs e)

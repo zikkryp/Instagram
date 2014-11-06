@@ -33,7 +33,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock x:Name="pageTitle" Text="Instagram" Foreground="#1c5380" IsHitTestVisible="false" FontFamily="Billabong" FontSize="100" TextWrapping="NoWrap" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2"/>
+            <TextBlock x:Name="pageTitle" Text="Instagram" Foreground="#1c5380" IsHitTestVisible="false" FontFamily="Billabong" FontSize="75" TextWrapping="NoWrap" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
+            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <Button Foreground="White" Background="#1c5380" Template="{StaticResource SearchTemplate}" Width="50" Height="50"/>
+                <Button Foreground="White" Background="#1c5380" Template="{StaticResource ContactsTemplate}" Width="50" Height="50" Margin="25,0,0,0"/>
+            </StackPanel>
 
             <GridViewItem Style="{StaticResource GridViewItemStyleNone}" Width="300" Height="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="3" Tapped="UserInfo_Tapped">
                 <Grid Width="300" Height="100">
@@ -53,7 +57,7 @@
         </Grid>
         <Grid Grid.Row="1">
             <Button x:Name="moreButton" Template="{StaticResource MoreTemplate}" Height="50" Width="50" Visibility="Collapsed" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20" Click="More_Click" Background="#B31B1B1B"/>
-            <Button Foreground="White" Background="#1c5380" Height="25" Margin="-5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" BorderBrush="#FF1C5380" Style="{StaticResource ButtonBottom}"/>
+            <Button Foreground="White" Background="#1c5380" Height="20" Margin="-5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" BorderBrush="#FF1C5380" Style="{StaticResource ButtonBottom}"/>
             <ProgressBar x:Name="progressBar" Width="200" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,25" IsIndeterminate="True" Visibility="Collapsed"/>
             <GridView x:Name="gridView" ItemsSource="{Binding Feed}" IsItemClickEnabled="True" 
                       SelectionMode="Extended" 

@@ -46,9 +46,10 @@ namespace Instagram.UI
             this.navigationHelper.SaveState += navigationHelper_SaveState;
         }
 
-        private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            GetActiveAccount();
+            await GetActiveAccount();
+            GetAllUsers();
         }
 
         private void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -69,9 +70,16 @@ namespace Instagram.UI
 
         #endregion
 
-        private Account account;
+        private async void UpdateData()
+        {
+            await GetActiveAccount();
+            GetAllUsers();
+        }
 
-        private async void GetActiveAccount()
+        private Account account;
+        private Account selectedAccount = null;
+
+        private async Task GetActiveAccount()
         {
             try
             {
@@ -79,11 +87,6 @@ namespace Instagram.UI
 
                 if (this.account == null)
                 {
-                    //if (await new Authentication().AuthenticateAsync() != null)
-                    //{
-                    //    this.Frame.Navigate(typeof(FeedPage));
-                    //}
-
                     return;
                 }
 
@@ -102,18 +105,25 @@ namespace Instagram.UI
             }
         }
 
+        private async void GetAllUsers()
+        {
+            Storage storage = new Storage();
+
+            try
+            {
+                var users = await storage.GetAllUsers();
+
+                this.gridView.ItemsSource = users;
+            }
+            catch (Exception ex)
+            {
+                ShowDialog(ex.Message);
+            }
+        }
+
         private async void ShowDialog(string message)
         {
             await new MessageDialog(message, "WelcomePage").ShowAsync();
-        }
-
-        private async void SignIn_Click(object sender, RoutedEventArgs e)
-        {
-            if (await new Authentication().AuthenticateAsync() != null)
-            {
-                GetActiveAccount();
-                //this.Frame.Navigate(typeof(FeedPage));
-            }
         }
 
         private async Task GetUserInfo()
@@ -133,7 +143,7 @@ namespace Instagram.UI
 
                 userGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
-                UpdateUserStorage();
+                await UpdateUserStorage();
             }
             finally
             {
@@ -141,20 +151,36 @@ namespace Instagram.UI
             }
         }
 
-        private async void UpdateUserStorage()
+        private async Task UpdateUserStorage()
         {
             Storage storage = new Storage();
-
-            //this.account = await storage.GetActiveAccountAsync();
-
-            //this.account.Username = user.Username;
-            //this.account.ProfilePicture = user.ProfilePicture;
 
             await storage.UpdateItem<Account>(account);
         }
 
-        private void SignIn_User(object sender, RoutedEventArgs e)
+        private async void SignIn_Click(object sender, RoutedEventArgs e)
         {
+            if (await new Authentication().AuthenticateAsync() != null)
+            {
+                UpdateData();
+            }
+        }
+
+        private async void SignIn_User_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.selectedAccount != null)
+            {
+                Storage storage = new Storage();
+                this.account.IsActive = false;
+
+                await storage.UpdateItem<Account>(this.account);
+
+                this.account = selectedAccount;
+                this.account.IsActive = true;
+
+                await storage.UpdateItem<Account>(this.account);
+            }
+
             this.Frame.Navigate(typeof(FeedPage));
         }
 
@@ -166,10 +192,11 @@ namespace Instagram.UI
             {
                 if (await storage.DeleteItem<Account>(this.account.Id))
                 {
+                    UpdateData();
                     this.gridViewItem.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ShowDialog(ex.Message);
             }
@@ -178,8 +205,6 @@ namespace Instagram.UI
         private async void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             Storage storage = new Storage();
-
-            //this.account = await storage.GetActiveAccountAsync();
 
             this.account.IsAutoSignIn = true;
 
@@ -190,11 +215,14 @@ namespace Instagram.UI
         {
             Storage storage = new Storage();
 
-            //this.account = await storage.GetActiveAccountAsync();
-
             this.account.IsAutoSignIn = false;
 
             await storage.UpdateItem<Account>(this.account);
+        }
+
+        private void gridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.selectedAccount = (Account)e.ClickedItem;
         }
     }
 }

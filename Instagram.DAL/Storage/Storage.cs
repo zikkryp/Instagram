@@ -15,7 +15,7 @@ namespace Instagram.DAL.Storage
         public async Task CreateAsync<T>(T item)
         {
             StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("Instagram.db", CreationCollisionOption.OpenIfExists);
-            
+
             await Task.Delay(1);
 
             using (SQLiteConnection connection = new SQLiteConnection(file.Path))
@@ -36,6 +36,25 @@ namespace Instagram.DAL.Storage
                 using (SQLiteConnection connection = new SQLiteConnection(file.Path))
                 {
                     return connection.Find<Account>(e => e.IsActive == true);
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<IEnumerable<Account>> GetAllUsers()
+        {
+            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("Instagram.db", CreationCollisionOption.OpenIfExists);
+
+            await Task.Delay(1);
+
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(file.Path))
+                {
+                    return connection.Table<Account>().ToArray<Account>();
                 }
             }
             catch (Exception)
@@ -71,7 +90,7 @@ namespace Instagram.DAL.Storage
 
                 return true;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }

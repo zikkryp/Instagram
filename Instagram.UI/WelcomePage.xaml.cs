@@ -24,7 +24,6 @@ namespace Instagram.UI
 {
     public sealed partial class WelcomePage : Page
     {
-
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
@@ -90,12 +89,12 @@ namespace Instagram.UI
 
                 gridViewItem.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
-                await GetUserInfo();
-
                 if (this.account.IsAutoSignIn)
                 {
                     this.Frame.Navigate(typeof(FeedPage));
                 }
+
+                await GetUserInfo();
             }
             catch (Exception e)
             {

@@ -167,7 +167,7 @@
         <Grid Background="#4CFFFFFF" VerticalAlignment="Top" Height="60" >
             <Button Content="Sign In" FontSize="20" HorizontalAlignment="Right" Width="100" Height="45" Background="#FF3572A2" Margin="0,0,5,0" Foreground="White" Style="{StaticResource ButtonStyle1}" Click="SignIn_Click"/>
         </Grid>
-
+        
         <GridViewItem x:Name="gridViewItem" Background="#66000000" Visibility="Collapsed" Width="500" Height="200">
             <Grid Width="500" Height="200">
                 <Grid x:Name="userGrid" Visibility="Collapsed" Width="500" Height="200">

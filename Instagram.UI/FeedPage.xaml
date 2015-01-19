@@ -21,7 +21,7 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="140"/>
+            <RowDefinition Height="125"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -62,13 +62,12 @@
             <GridView x:Name="gridView" ItemsSource="{Binding Feed}" IsItemClickEnabled="True" 
                       SelectionMode="Extended" 
                       ItemClick="GridView_ItemClick"
-                      VerticalAlignment="Center"
-                      Grid.Row="1" 
+                      VerticalAlignment="Top"
                       ItemContainerStyle="{StaticResource GridViewItemStyleNone}"
                       ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                 <GridView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Width="420" Height="300">
+                        <Grid Width="420" Height="265">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="3*"/>
@@ -90,7 +89,7 @@
                                 <TextBlock Text="{Binding CreatedTime}" FontSize="15" FontWeight="SemiLight" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1"/>
                             </Grid>
                             <TextBlock Text="{Binding User.Username}" Foreground="#1c5380" FontSize="24" FontWeight="SemiLight" Margin="10,0,0,0" Grid.Column="1"/>
-                            <Rectangle RadiusX="135" RadiusY="135" Width="265" Height="265" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1">
+                            <Rectangle RadiusX="135" RadiusY="135" Width="225" Height="225" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1">
                                 <Rectangle.Fill>
                                     <ImageBrush ImageSource="{Binding Images.Thumbnail.Url}"/>
                                 </Rectangle.Fill>

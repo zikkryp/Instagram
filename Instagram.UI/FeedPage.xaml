@@ -11,7 +11,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <x:String x:Key="AppName">My Application</x:String>
+        <x:String x:Key="AppName">Instagram</x:String>
     </Page.Resources>
 
     <Grid Background="#FFF3F3F3">
@@ -33,7 +33,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock x:Name="pageTitle" Text="Instagram" Foreground="#1c5380" IsHitTestVisible="false" FontFamily="Billabong" FontSize="75" TextWrapping="NoWrap" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
+            <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Foreground="#1c5380" IsHitTestVisible="false" FontFamily="Billabong" FontSize="75" TextWrapping="NoWrap" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
             <StackPanel Orientation="Horizontal" Grid.Column="1">
                 <Button Foreground="White" Background="#1c5380" Template="{StaticResource SearchTemplate}" Width="50" Height="50"/>
                 <Button Foreground="White" Background="#1c5380" Template="{StaticResource ContactsTemplate}" Width="50" Height="50" Margin="25,0,0,0"/>
